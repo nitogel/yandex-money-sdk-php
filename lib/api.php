@@ -191,16 +191,19 @@ class API extends BaseAPI
      * at the end of the string.
      * @param array $scope A string of requested permissions(joined list of
      * strings)
+     * @param string $instance Instance name allow to obtain several access tokens
+     * for one client_id
      * @return response object
      */
     public static function buildObtainTokenUrl(
         string $client_id,
         string $redirect_uri,
-        array $scope
+        array $scope = [],
+        string $instance = ''
     ) {
         $params = sprintf(
-            "client_id=%s&response_type=%s&redirect_uri=%s&scope=%s",
-            $client_id, "code", $redirect_uri, implode(" ", $scope)
+            "client_id=%s&response_type=%s&redirect_uri=%s&scope=%s&instance_name=%s",
+            $client_id, "code", $redirect_uri, implode(" ", $scope), $instance
         );
         return sprintf("%s/oauth/authorize?%s", Config::$MONEY_URL, $params);
     }
